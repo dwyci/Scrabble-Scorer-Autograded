@@ -32,13 +32,40 @@ function oldScrabbleScorer(word) {
 // your job is to finish writing these functions and variables that we've named //
 // don't change the names or your program won't work as expected. //
 
+
+//simpleScorer: Define a function that takes a word as a parameter and 
+//returns a numerical score. Each letter within the word is worth 1 point.
+let simpleScorer = function(userWord) {
+   let score = userWord.length;
+   return score;   
+}
+
+let vowelBonusScorer = function (userWord) {
+   let score = 0;
+   userWordArray = userWord.split('');
+   for(let i = 0; i < userWord.length; i++){
+      if(['a', 'e' ,'i', 'o', 'u'].includes(userWordArray[i].toLowerCase())){
+          score =  score + 3;
+      } else{
+         score ++
+      }
+   } return score;
+   
+} 
+
+
 function initialPrompt() {
-   console.log("Let's play some scrabble! Enter a word:");
+   
+   let userWord = input.question("Let's play some scrabble! Enter a word:");
+      console.log(oldScrabbleScorer(userWord));
+      console.log(`Simple score is ${simpleScorer(userWord)}`);
+      console.log(`vowel bonus score ${vowelBonusScorer(userWord)}`);
 };
+initialPrompt();
 
-let simpleScorer;
 
-let vowelBonusScorer;
+
+
 
 let scrabbleScorer;
 
