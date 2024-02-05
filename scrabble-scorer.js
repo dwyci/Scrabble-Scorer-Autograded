@@ -1,5 +1,8 @@
 // This assignment is inspired by a problem on Exercism (https://exercism.org/tracks/javascript/exercises/etl) that demonstrates Extract-Transform-Load using Scrabble's scoring system. 
 
+//need to get rid of asking the question twice
+//need to get the total of scrabble
+
 const input = require("readline-sync");
 
 const oldPointStructure = {
@@ -17,10 +20,7 @@ let userWord;
 function initialPrompt() {
    
     userWord = input.question("Let's play some scrabble! Enter a word:");
-      // console.log(oldScrabbleScorer(userWord));
-      // console.log(`Simple score is ${simpleScorer(userWord)}`);
-      // console.log(`vowel bonus score ${vowelBonusScorer(userWord)}`);
-      
+           
 };
 initialPrompt();
 
@@ -45,7 +45,6 @@ function oldScrabbleScorer(word) {
 // your job is to finish writing these functions and variables that we've named //
 // don't change the names or your program won't work as expected. //
 
-
 //simpleScorer: Define a function that takes a word as a parameter and 
 //returns a numerical score. Each letter within the word is worth 1 point.
 let simpleScorer = function(userWord) {
@@ -68,8 +67,6 @@ let vowelBonusScorer = function (userWord) {
 
 
 let scrabbleScorer;
-
-
 
 const scoringAlgorithms = [
    {name:'Simple Score', description: "Vowels are 3 pts, consonants are 1 pt.", scoringFunction:  simpleScorer},
@@ -106,9 +103,27 @@ function scorerPrompt() {
 
 
 
-function transform() {};
+function transform(oldPointStructure) {
+   let newPointStructure = {};
+   for(let pointValue in oldPointStructure){
+      //i want to go through the old structure
+      //then, go into the first item, 
+      //go into the first index, make that a new item in the newPoint structure object
+      //assign that item a point that is equal to the index that it had in oldPointStructure
+      //oldPointStructure['key'][index]
+      //1: ['A', 'E', 'I', 'O', 'U', 'L', 'N', 'R', 'S', 'T'],
 
-let newPointStructure;
+
+      for (let i = 0; i < oldPointStructure[pointValue].length; i++) {
+         //add 'a' lowercase ass a key to newpoint structure, then assign oldPointstructure key
+         newPointStructure[oldPointStructure[pointValue][i]] =oldPointStructure[pointValue].toLowerCase;
+                
+      } return  newPointStructure;
+      }
+    
+   };
+
+let newPointStructure = transform(oldPointStructure);
 
 function runProgram() {
    initialPrompt();
