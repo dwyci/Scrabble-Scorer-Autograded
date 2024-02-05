@@ -12,6 +12,18 @@ const oldPointStructure = {
   10: ['Q', 'Z']
 };
 
+let userWord;
+
+function initialPrompt() {
+   
+    userWord = input.question("Let's play some scrabble! Enter a word:");
+      // console.log(oldScrabbleScorer(userWord));
+      // console.log(`Simple score is ${simpleScorer(userWord)}`);
+      // console.log(`vowel bonus score ${vowelBonusScorer(userWord)}`);
+      
+};
+initialPrompt();
+
 function oldScrabbleScorer(word) {
 	word = word.toUpperCase();
 	let letterPoints = "";
@@ -28,6 +40,7 @@ function oldScrabbleScorer(word) {
 	}
 	return letterPoints;
  }
+
 
 // your job is to finish writing these functions and variables that we've named //
 // don't change the names or your program won't work as expected. //
@@ -54,24 +67,44 @@ let vowelBonusScorer = function (userWord) {
 } 
 
 
-function initialPrompt() {
-   
-   let userWord = input.question("Let's play some scrabble! Enter a word:");
-      console.log(oldScrabbleScorer(userWord));
-      console.log(`Simple score is ${simpleScorer(userWord)}`);
-      console.log(`vowel bonus score ${vowelBonusScorer(userWord)}`);
-};
-initialPrompt();
-
-
-
-
-
 let scrabbleScorer;
 
-const scoringAlgorithms = [];
 
-function scorerPrompt() {}
+
+const scoringAlgorithms = [
+   {name:'Simple Score', description: "Vowels are 3 pts, consonants are 1 pt.", scoringFunction:  simpleScorer},
+   {name:'Bonus Vowels', description: "Each letter is worth 1 point.", scoringFunction: vowelBonusScorer},
+   {name:'Scrabble', description: 'The traditional scoring algorithm.', scoringFunction: oldScrabbleScorer},
+];
+   // Simple scoring
+   console.log("algorithm name: ", scoringAlgorithms[0].name);
+   console.log("scoringFunction result: ", scoringAlgorithms[0].scoringFunction("JavaScript"));
+
+function scorerPrompt() {
+   let selection = input.question(
+      `Which scoring algorithm would you like to use?\n
+   0 - Simple: One point per character
+   1 - Vowel Bonus: Vowels are worth 3 points
+   2 - Scrabble: Uses scrabble point system
+   Enter 0, 1, or 2:  `
+   );
+   if(selection === '0'){
+      console.log(`score for '${userWord}': is ${simpleScorer(userWord)}`);
+         } else if(selection === '1'){
+      
+      console.log(`score for '${userWord}': is ${vowelBonusScorer(userWord)}`);
+   } else if(selection === '2'){
+      
+      console.log(`score for '${userWord}': is ${oldScrabbleScorer(userWord)}`);
+   }else{
+      console.log(scorerPrompt());
+   }
+   
+      
+} 
+
+
+
 
 function transform() {};
 
@@ -79,7 +112,7 @@ let newPointStructure;
 
 function runProgram() {
    initialPrompt();
-   
+   scorerPrompt();
 }
 
 // Don't write any code below this line //
