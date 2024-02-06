@@ -2,6 +2,8 @@
 
 //need to get rid of asking the question twice
 //need to get the total of scrabble
+//@Student - remember the directions say scoringFunction, but the test is looking for scorerFunction.
+
 
 const input = require("readline-sync");
 
@@ -33,7 +35,8 @@ function oldScrabbleScorer(word) {
 	  for (const pointValue in oldPointStructure) {
  
 		 if (oldPointStructure[pointValue].includes(word[i])) {
-			letterPoints += `Points for '${word[i]}': ${pointValue}\n`
+			letterPoints += 
+         console.log(`Points for '${word[i]}': ${pointValue}\n`);
 		 }
  
 	  }
@@ -48,15 +51,16 @@ function oldScrabbleScorer(word) {
 //simpleScorer: Define a function that takes a word as a parameter and 
 //returns a numerical score. Each letter within the word is worth 1 point.
 let simpleScorer = function(userWord) {
-   let score = userWord.length;
-   return score;   
+   return userWord.length;
+       
 }
 
 let vowelBonusScorer = function (userWord) {
    let score = 0;
+   let vowels = 'aeiou';
    userWordArray = userWord.split('');
    for(let i = 0; i < userWord.length; i++){
-      if(['a', 'e' ,'i', 'o', 'u'].includes(userWordArray[i].toLowerCase())){
+      if(vowels.includes(userWordArray[i].toLowerCase())){
           score =  score + 3;
       } else{
          score ++
@@ -66,16 +70,34 @@ let vowelBonusScorer = function (userWord) {
 } 
 
 
-let scrabbleScorer;
+let scrabbleScorer = function(userWord) {
+   let score = 0;
+   for (let i = 0; i < userWord.length; i++){
+      score += newPointStructure[userWord[i].toLowerCase()];
+   }
+   return score;
+};
 
 const scoringAlgorithms = [
-   {name:'Simple Score', description: "Vowels are 3 pts, consonants are 1 pt.", scoringFunction:  simpleScorer},
-   {name:'Bonus Vowels', description: "Each letter is worth 1 point.", scoringFunction: vowelBonusScorer},
-   {name:'Scrabble', description: 'The traditional scoring algorithm.', scoringFunction: oldScrabbleScorer},
+   {
+      name: "Simple",
+      description: "One point per character",
+      scorerFunction: simpleScorer
+   },
+   {
+      name: "Vowel Bonus",
+      description: "Vowels are worth 3 points",
+      scorerFunction: vowelBonusScorer
+   },
+   {
+      name: "Scrabble",
+      description: "Uses scrabble point system",
+      scorerFunction: scrabbleScorer
+   }
 ];
    // Simple scoring
    console.log("algorithm name: ", scoringAlgorithms[0].name);
-   console.log("scoringFunction result: ", scoringAlgorithms[0].scoringFunction("JavaScript"));
+   console.log("scorerFunction result: ", scoringAlgorithms[0].scorerFunction("JavaScript"));
 
 function scorerPrompt() {
    let selection = input.question(
@@ -101,33 +123,25 @@ function scorerPrompt() {
 } 
 
 
-
-
 function transform(oldPointStructure) {
    let newPointStructure = {};
    for(let pointValue in oldPointStructure){
-      //i want to go through the old structure
-      //then, go into the first item, 
-      //go into the first index, make that a new item in the newPoint structure object
-      //assign that item a point that is equal to the index that it had in oldPointStructure
-      //oldPointStructure['key'][index]
-      //1: ['A', 'E', 'I', 'O', 'U', 'L', 'N', 'R', 'S', 'T'],
-
-
+     
       for (let i = 0; i < oldPointStructure[pointValue].length; i++) {
          //add 'a' lowercase ass a key to newpoint structure, then assign oldPointstructure key
-         newPointStructure[oldPointStructure[pointValue][i]] =oldPointStructure[pointValue].toLowerCase;
-                
-      } return  newPointStructure;
+         //let letter = oldPointStructure[pointValue].toLowerCase;
+         //newPointStructure[oldPointStructure] = parseInt(pointValue);
+         newPointStructure[oldPointStructure[pointValue][i].toLowerCase()] = Number(pointValue);
+      } 
       }
-    
+      return  newPointStructure;
    };
 
 let newPointStructure = transform(oldPointStructure);
 
 function runProgram() {
-   initialPrompt();
-   scorerPrompt();
+   let word = initialPrompt();
+   let scorer = scorerPrompt().scorerFunction;
 }
 
 // Don't write any code below this line //
