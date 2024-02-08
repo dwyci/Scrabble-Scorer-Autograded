@@ -22,9 +22,9 @@ let userWord;
 function initialPrompt() {
    
     userWord = input.question("Let's play some scrabble! Enter a word:");
-           
+    initialPrompt();      
 };
-initialPrompt();
+//put prompt inside the function
 
 function oldScrabbleScorer(word) {
 	word = word.toUpperCase();
